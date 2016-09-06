@@ -1,19 +1,19 @@
 MPLINK 5.08, LINKER
-Linker Map File - Created Tue Sep 06 07:16:30 2016
+Linker Map File - Created Tue Sep 06 09:07:26 2016
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
                 ---------  ---------  ---------  ---------  ---------
-                   .org_0       code   0x000000    program   0x000026
-                   .cinit    romdata   0x000013    program   0x000004
+                   .org_0       code   0x000000    program   0x000040
+                   .cinit    romdata   0x000020    program   0x000004
 
 
 
                               Program Memory Usage 
                                Start         End      
                            ---------   ---------      
-                            0x000000    0x000014      
-            21 out of 4359 program addresses used, program memory utilization is 0%
+                            0x000000    0x000021      
+            34 out of 4359 program addresses used, program memory utilization is 0%
 
 
 
@@ -25,7 +25,7 @@ Linker Map File - Created Tue Sep 06 07:16:30 2016
               One_S_Delay   0x00000f    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
                     Setup   0x000001    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
               StartTimer1   0x000007    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
-              Start_Delay   0x000010    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+              Start_Delay   0x000015    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
               StopTTimer1   0x000009    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
 
 
@@ -39,6 +39,6 @@ Linker Map File - Created Tue Sep 06 07:16:30 2016
               StopTTimer1   0x000009    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
          CalculateVoltage   0x00000f    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
               One_S_Delay   0x00000f    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
-              Start_Delay   0x000010    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+              Start_Delay   0x000015    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
 
 

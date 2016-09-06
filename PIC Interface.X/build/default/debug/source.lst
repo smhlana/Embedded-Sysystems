@@ -1,4 +1,4 @@
-MPASM 5.68                        SOURCE.ASM   9-6-2016  7:16:29         PAGE  1
+MPASM 5.68                        SOURCE.ASM   9-6-2016  9:07:25         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,7 +57,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000E   2???           00041         goto    CalculateVoltage
                       00042 ;*******************************************************************************
                       00043 
-MPASM 5.68                        SOURCE.ASM   9-6-2016  7:16:29         PAGE  2
+MPASM 5.68                        SOURCE.ASM   9-6-2016  9:07:25         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -89,13 +89,29 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00067 ;*******************************************************************************
 000F                  00068 One_S_Delay
 000F   3000           00069         movlw   00h
-0010                  00070 Start_Delay
+0010   00A3           00070         movwf   CNT_1
+0011   30D8           00071         movlw   0D8h        ; Load 219
+0012   00A4           00072         movwf   CNT_2
+0013   3006           00073         movlw   06h
+0014   00A5           00074         movwf   CNT_3
+0015                  00075 Start_Delay
 Message[305]: Using default destination of 1 (file).
-0010   0BA3           00071         decfsz  CNT_1
-0011   2???           00072         goto    Start_Delay
-0012   0008           00073         return
-                      00074         end
-MPASM 5.68                        SOURCE.ASM   9-6-2016  7:16:29         PAGE  3
+0015   0BA3           00076         decfsz  CNT_1
+0016   2???           00077         goto    Start_Delay
+0017   3000           00078         movlw   00h
+0018   00A3           00079         movwf   CNT_1
+Message[305]: Using default destination of 1 (file).
+0019   0BA4           00080         decfsz  CNT_2
+001A   2???           00081         goto    Start_Delay
+001B   30D8           00082         movlw   0D8h
+001C   00A4           00083         movwf   CNT_2
+Message[305]: Using default destination of 1 (file).
+001D   0BA5           00084         decfsz  CNT_3
+001E   2???           00085         goto    Start_Delay
+001F   0008           00086         return
+                      00087         
+                      00088         end
+MPASM 5.68                        SOURCE.ASM   9-6-2016  9:07:25         PAGE  3
 
 
 SYMBOL TABLE
@@ -154,7 +170,7 @@ C1CH0                             00000000
 C1CH1                             00000001
 C1IE                              00000005
 C1IF                              00000005
-MPASM 5.68                        SOURCE.ASM   9-6-2016  7:16:29         PAGE  4
+MPASM 5.68                        SOURCE.ASM   9-6-2016  9:07:25         PAGE  4
 
 
 SYMBOL TABLE
@@ -213,7 +229,7 @@ DC1B1                             00000005
 D_A                               00000005
 D_NOT_A                           00000005
 ECCPAS                            0000001D
-MPASM 5.68                        SOURCE.ASM   9-6-2016  7:16:29         PAGE  5
+MPASM 5.68                        SOURCE.ASM   9-6-2016  9:07:25         PAGE  5
 
 
 SYMBOL TABLE
@@ -272,7 +288,7 @@ IOCB5                             00000005
 IOCB6                             00000006
 IOCB7                             00000007
 IRCF0                             00000004
-MPASM 5.68                        SOURCE.ASM   9-6-2016  7:16:29         PAGE  6
+MPASM 5.68                        SOURCE.ASM   9-6-2016  9:07:25         PAGE  6
 
 
 SYMBOL TABLE
@@ -331,7 +347,7 @@ PIE2                              0000008D
 PIR1                              0000000C
 PIR2                              0000000D
 PORTA                             00000005
-MPASM 5.68                        SOURCE.ASM   9-6-2016  7:16:29         PAGE  7
+MPASM 5.68                        SOURCE.ASM   9-6-2016  9:07:25         PAGE  7
 
 
 SYMBOL TABLE
@@ -390,7 +406,7 @@ R_W                               00000002
 S                                 00000003
 SBOREN                            00000004
 SCKP                              00000004
-MPASM 5.68                        SOURCE.ASM   9-6-2016  7:16:29         PAGE  8
+MPASM 5.68                        SOURCE.ASM   9-6-2016  9:07:25         PAGE  8
 
 
 SYMBOL TABLE
@@ -430,7 +446,7 @@ SWDTEN                            00000000
 SYNC                              00000004
 Setup                             00000001
 StartTimer1                       00000007
-Start_Delay                       00000010
+Start_Delay                       00000015
 StopTTimer1                       00000009
 T0CS                              00000005
 T0IE                              00000005
@@ -449,7 +465,7 @@ T2CKPS0                           00000000
 T2CKPS1                           00000001
 T2CON                             00000012
 T2IE                              00000001
-MPASM 5.68                        SOURCE.ASM   9-6-2016  7:16:29         PAGE  9
+MPASM 5.68                        SOURCE.ASM   9-6-2016  9:07:25         PAGE  9
 
 
 SYMBOL TABLE
@@ -508,7 +524,7 @@ TXIF                              00000004
 TXREG                             00000019
 TXSTA                             00000098
 UA                                00000001
-MPASM 5.68                        SOURCE.ASM   9-6-2016  7:16:29         PAGE 10
+MPASM 5.68                        SOURCE.ASM   9-6-2016  9:07:25         PAGE 10
 
 
 SYMBOL TABLE
@@ -567,7 +583,7 @@ _BOR_SBODEN                       00003DFF
 _CONFIG                           00002007
 _CPD_OFF                          00003FFF
 _CPD_ON                           00003F7F
-MPASM 5.68                        SOURCE.ASM   9-6-2016  7:16:29         PAGE 11
+MPASM 5.68                        SOURCE.ASM   9-6-2016  9:07:25         PAGE 11
 
 
 SYMBOL TABLE
@@ -618,6 +634,6 @@ __MPLAB_DEBUGGER_SIMULATOR        1
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed
-Messages :     1 reported,     0 suppressed
+Messages :     3 reported,     0 suppressed
 
 

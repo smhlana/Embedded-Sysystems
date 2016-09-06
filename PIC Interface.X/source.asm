@@ -31,7 +31,7 @@ CalculateFrequency
 StartTimer1
 	bcf     STATUS,RP1	; Select Bank 0
 	bsf	T1CON, TMR1ON   ; Enable Timer 1
-	; INSERT 1S DELAY
+	call	One_S_Delay
 StopTTimer1
 	bcf	T1CON, TMR1ON   ; Enable Timer 1
 	movf	TMR1L, W
@@ -44,31 +44,28 @@ StopTTimer1
 ;**********CALCULATE VOLTAGE****************************************************
 CalculateVoltage
 ;*******************************************************************************
-	
+
 ;**********1S DELAY*************************************************************
-;One_S_Delay
-;	movlw	00h	    ; Load 256
-;	movwf	CNT_1
-;	movlw	0DBh	    ; Load 219
-;	movwf	CNT_2
-;	movlw	06h	    ; Load 6
-;	movwf	CNT_3
-;Start_Delay
-;	decfsz	CNT_1
-;	goto	Start_Delay
-;	movlw	00h
-;	movwf	CNT_1
-;	decfsz	CNT_2
-;	movlw	0DBh
-;	movfw	CNT_2
-;	decfsz	CNT_3
-;	goto	Start_Delay
-;	return
-;*******************************************************************************
 One_S_Delay
-	movlw	00h
+	; (((2+3(255))x10e-6)x216)x6 = 1.0000535s
+	movlw	00h	    ; Load 256
+	movwf	CNT_1
+	movlw	0D8h	    ; Load 216
+	movwf	CNT_2
+	movlw	06h	    ; Load 6
+	movwf	CNT_3
 Start_Delay
 	decfsz	CNT_1
 	goto	Start_Delay
+	movlw	00h
+	movwf	CNT_1
+	decfsz	CNT_2
+	goto	Start_Delay
+	movlw	0D8h
+	movwf	CNT_2
+	decfsz	CNT_3
+	goto	Start_Delay
 	return
+;*******************************************************************************
+	
 	end
