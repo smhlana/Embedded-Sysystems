@@ -1,32 +1,34 @@
 MPLINK 5.08, LINKER
-Linker Map File - Created Tue Sep 06 09:07:26 2016
+Linker Map File - Created Fri Sep 09 12:06:44 2016
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
                 ---------  ---------  ---------  ---------  ---------
-                   .org_0       code   0x000000    program   0x000040
-                   .cinit    romdata   0x000020    program   0x000004
+                   .org_0       code   0x000000    program   0x000078
+                   .cinit    romdata   0x00003c    program   0x000004
 
 
 
                               Program Memory Usage 
                                Start         End      
                            ---------   ---------      
-                            0x000000    0x000021      
-            34 out of 4359 program addresses used, program memory utilization is 0%
+                            0x000000    0x00003d      
+            62 out of 4359 program addresses used, program memory utilization is 1%
 
 
 
                               Symbols - Sorted by Name
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
-       CalculateFrequency   0x000006    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
-         CalculateVoltage   0x00000f    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
-              One_S_Delay   0x00000f    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+       CalculateFrequency   0x00000f    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+         CalculateVoltage   0x00001b    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+              One_S_Delay   0x00002b    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+                  PCComms   0x00001c    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+                 PollPIR1   0x000023    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
                     Setup   0x000001    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
-              StartTimer1   0x000007    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
-              Start_Delay   0x000015    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
-              StopTTimer1   0x000009    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+              StartTimer1   0x000010    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+              Start_Delay   0x000031    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+               StopTimer1   0x000015    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
 
 
 
@@ -34,11 +36,13 @@ Linker Map File - Created Tue Sep 06 09:07:26 2016
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
                     Setup   0x000001    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
-       CalculateFrequency   0x000006    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
-              StartTimer1   0x000007    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
-              StopTTimer1   0x000009    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
-         CalculateVoltage   0x00000f    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
-              One_S_Delay   0x00000f    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
-              Start_Delay   0x000015    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+       CalculateFrequency   0x00000f    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+              StartTimer1   0x000010    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+               StopTimer1   0x000015    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+         CalculateVoltage   0x00001b    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+                  PCComms   0x00001c    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+                 PollPIR1   0x000023    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+              One_S_Delay   0x00002b    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
+              Start_Delay   0x000031    program     static C:\Users\Admin\Documents\MPLABX\Projects\Embedded-Sysystems\PIC Interface.X\source.asm
 
 
