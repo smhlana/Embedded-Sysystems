@@ -8,6 +8,8 @@ T1SYNC		EQU 22h
 CNT_1		EQU 23h	
 CNT_2		EQU 24h
 CNT_3		EQU 25h
+DIGITLO		EQU 26h
+DIGITHI		EQU 27h
 ;*******************************************************************************
 
 ;**********BEGIN****************************************************************
@@ -17,10 +19,18 @@ CNT_3		EQU 25h
 	
 ;**********SETUP****************************************************************
 Setup   bcf     STATUS, RP0	
+        bsf     STATUS, RP1	; Select Bank 1
+	bsf	TRISA, TRISA0	; Set RA0 as input
+	bsf	TRISA, TRISA5	; Set RA5 as output
+	bcf	TRISB, TRISB7	; Set RB7 as output
+	movlw	b'01110000'	; Select ADC FRC clock
+        movwf	ADCON1
+	bcf	STATUS,RP0
+	bsf	STATUS,RP1	; Select Bank 2
+	bsf	ANSEL,0		; Enable analog input in RA0
+	bcf     STATUS, RP0	
         bcf     STATUS, RP1	; Select Bank 0
 	bsf	T1CON, TMR1CS	; Use external clock source - T1CKI pin on rising edge
-	;movlw	02h
-	;movwf	T1SYNC
 	bsf	T1CON, 02	; Do not synchronise the external clk input
 	bsf     STATUS, RP0	
         bcf     STATUS, RP1	; Select Bank 1
@@ -31,6 +41,8 @@ Setup   bcf     STATUS, RP0
 	bcf     STATUS, RP0	
         bcf     STATUS, RP1	; Select Bank 0
 	bsf	RCSTA, SPEN	; Enable asynchronous serial port
+	movlw   b'10000001'	; Enable ADC and Rigth justify
+        movwf   ADCON0
 	goto	CalculateFrequency
 ;*******************************************************************************
 
@@ -54,6 +66,24 @@ StopTimer1
 
 ;**********CALCULATE VOLTAGE****************************************************
 CalculateVoltage
+	bcf	PIR1,6	    ; A/D conversion has not started
+	bcf	STATUS,6
+        bsf     STATUS,5    ; Select bank 1
+	bsf	PIE1,6	    ; Enable ADC interrupt
+        bcf     STATUS,5    ; Select bank 0
+	bsf	INTCON,6
+	call    SampleTime
+	bsf     ADCON0,GO   ; Start A/D conversion cycle
+        btfsc   ADCON0,GO   ; Poll conversion
+        goto    $-1
+        movf    ADRESH,W
+        movwf   DIGITHI
+	bcf	STATUS,6
+        bsf     STATUS,5    ; Select bank 1
+        movf    ADRESL,0
+        bcf     STATUS,5    ; Select bank 0
+        movwf   DIGITLO
+	bcf	PIR1,6
 	goto	PCComms
 ;*******************************************************************************
 
@@ -63,18 +93,46 @@ PCComms	bsf     STATUS, RP0
 	bsf	TXSTA, TXEN	; Enable the transmission
 	bcf     STATUS, RP0	
         bcf     STATUS, RP1	; Select Bank 0
-	movfw	FREQUENCY_L
+	movf	FREQUENCY_L, 0
 	movwf	TXREG
-PollPIR1
+PollPIR1_1
 	btfss	PIR1, TXIF	; Wait for transmit buffer to be empty
-	goto	PollPIR1
-	movfw	FREQUENCY_H
+	goto	PollPIR1_1
+	movf	FREQUENCY_H, 0
 	movwf	TXREG
-	; Send voltage also
+PollPIR1_2
+	btfss	PIR1, TXIF	; Wait for transmit buffer to be empty
+	goto	PollPIR1_2
+	movf	DIGITLO, 0
+	movwf	TXREG
+PollPIR1_3
+	btfss	PIR1, TXIF	; Wait for transmit buffer to be empty
+	goto	PollPIR1_3
+	movf	DIGITHI, 0
+	movwf	TXREG
+PollPIR1_4
+	btfss	PIR1, TXIF	; Wait for transmit buffer to be empty
+	goto	PollPIR1_4
 	bsf     STATUS, RP0	
         bcf     STATUS, RP1	; Select Bank 1
 	bcf	TXSTA, TXEN	; Disable the transmission
 	goto	CalculateFrequency
+;*******************************************************************************
+
+;**********A/D CONVERSION*******************************************************
+;Sample	
+;	return
+;*******************************************************************************
+
+;**********A/D SAMPLING TIME****************************************************
+SampleTime
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        return
 ;*******************************************************************************
 	
 ;**********1S DELAY*************************************************************

@@ -1,3 +1,15 @@
-Message[305] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 58 : Using default destination of 1 (file).
-Message[305] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 62 : Using default destination of 1 (file).
-Message[305] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 66 : Using default destination of 1 (file).
+Message[302] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 23 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 24 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 25 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 27 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 30 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 38 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 39 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 40 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 72 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 83 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 93 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 118 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[305] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 148 : Using default destination of 1 (file).
+Message[305] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 152 : Using default destination of 1 (file).
+Message[305] C:\USERS\ADMIN\DOCUMENTS\MPLABX\PROJECTS\EMBEDDED-SYSYSTEMS\PIC INTERFACE.X\SOURCE.ASM 156 : Using default destination of 1 (file).
