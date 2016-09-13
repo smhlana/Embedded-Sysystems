@@ -1,7 +1,7 @@
     __CONFIG  _CP_OFF & _CPD_OFF & _PWRTE_ON & _WDT_OFF & _INTRC_OSC_NOCLKOUT & _MCLRE_OFF & _FCMEN_OFF & _IESO_OFF
                 LIST        P = 16F690, r=dec
 #include "P16F690.inc"
-errorlevel -302                                ; suppress the bank sel check warnings
+    errorlevel -302                                ; suppress the bank sel check warnings
 
 ;**********REGISTERS LABEL EQUATES**********************************************
 W		EQU 00h
@@ -48,8 +48,8 @@ Setup   ;bcf	STATUS, RP0
 	bsf	T1CON, 02	; Do not synchronise the external clk input
 	bsf     STATUS, RP0	
         bcf     STATUS, RP1	; Select Bank 1
-	movlw	0CFh
-	movwf	SPBRG		; Use BAUD Rate = 1.2kbps in high speed
+	movlw	19h
+	movwf	SPBRG		; Use BAUD Rate = 9.6kbps in high speed
 	bsf	TXSTA, BRGH	; Select high speed
 	bcf	TXSTA, SYNC	; Enable asynchronous serial port
 	bcf     STATUS, RP0	
