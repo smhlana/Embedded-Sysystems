@@ -1,10 +1,13 @@
-MPASM 5.68                        SOURCE.ASM   9-12-2016  9:21:22         PAGE  1
+MPASM 5.68                        SOURCE.ASM   9-13-2016  13:18:28         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00001 #include "P16F690.inc"
+2007   33C4           00001     __CONFIG  _CP_OFF & _CPD_OFF & _PWRTE_ON & _WDT_OFF & _INTRC_OSC_NOCLKOUT & _MCLRE_OFF & _FCMEN_OFF 
+                            & _IESO_OFF
+                      00002                 LIST        P = 16F690, r=dec
+                      00003 #include "P16F690.inc"
                       00001         LIST
                       00002 
                       00003 ;==========================================================================
@@ -15,200 +18,213 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00008 ;==========================================================================
                       00009 
                       00757         LIST
-                      00002 
-                      00003 ;**********REGISTERS LABEL EQUATES**********************************************
-  00000000            00004 W               EQU 00h
-  00000020            00005 FREQUENCY_L     EQU 20h
-  00000021            00006 FREQUENCY_H     EQU 21h
-  00000022            00007 T1SYNC          EQU 22h
-  00000023            00008 CNT_1           EQU 23h 
-  00000024            00009 CNT_2           EQU 24h
-  00000025            00010 CNT_3           EQU 25h
-  00000026            00011 DIGITLO         EQU 26h
-  00000027            00012 DIGITHI         EQU 27h
-                      00013 ;*******************************************************************************
-                      00014 
-                      00015 ;**********BEGIN****************************************************************
-                      00016         ORG     0x00    ; Program Start address
-0000   2???           00017         goto    Setup   ; Jump to program setup
-                      00018 ;*******************************************************************************
-                      00019         
-                      00020 ;**********SETUP****************************************************************
-0001   1283           00021 Setup   bcf     STATUS, RP0     
-0002   1703           00022         bsf     STATUS, RP1     ; Select Bank 1
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0003   1405           00023         bsf     TRISA, TRISA0   ; Set RA0 as input
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0004   1685           00024         bsf     TRISA, TRISA5   ; Set RA5 as output
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0005   1386           00025         bcf     TRISB, TRISB7   ; Set RB7 as output
-0006   3070           00026         movlw   b'01110000'     ; Select ADC FRC clock
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0007   009F           00027         movwf   ADCON1
-0008   1283           00028         bcf     STATUS,RP0
-0009   1703           00029         bsf     STATUS,RP1      ; Select Bank 2
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-000A   141E           00030         bsf     ANSEL,0         ; Enable analog input in RA0
-000B   1283           00031         bcf     STATUS, RP0     
-000C   1303           00032         bcf     STATUS, RP1     ; Select Bank 0
-000D   1490           00033         bsf     T1CON, TMR1CS   ; Use external clock source - T1CKI pin on rising edge
-000E   1510           00034         bsf     T1CON, 02       ; Do not synchronise the external clk input
-000F   1683           00035         bsf     STATUS, RP0     
-0010   1303           00036         bcf     STATUS, RP1     ; Select Bank 1
-0011   30CF           00037         movlw   0CFh
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-MPASM 5.68                        SOURCE.ASM   9-12-2016  9:21:22         PAGE  2
+Warning[205]: Found directive in column 1. (errorlevel)
+                      00004 errorlevel -302                                ; suppress the bank sel check warnings
+                      00005 
+                      00006 ;**********REGISTERS LABEL EQUATES**********************************************
+  00000000            00007 W               EQU 00h
+  00000020            00008 FREQUENCY_L     EQU 20h
+  00000021            00009 FREQUENCY_H     EQU 21h
+  00000022            00010 T1SYNC          EQU 22h
+  00000023            00011 CNT_1           EQU 23h 
+  00000024            00012 CNT_2           EQU 24h
+  00000025            00013 CNT_3           EQU 25h
+  00000026            00014 DIGITLO         EQU 26h
+  00000027            00015 DIGITHI         EQU 27h
+                      00016 ;*******************************************************************************
+                      00017 
+                      00018 ;**********BEGIN****************************************************************
+                      00019         ORG     0x00    ; Program Start address
+0000   2???           00020         goto    Setup   ; Jump to program setup
+                      00021 ;*******************************************************************************
+                      00022         
+                      00023 ;**********SETUP****************************************************************
+0001                  00024 Setup   ;bcf    STATUS, RP0
+                      00025         ;bcf    STATUS, RP1
+                      00026         ;clrf   PORTC   
+                      00027         ;bsf    STATUS, RP1
+                      00028         ;CLRF   ANSEL   
+                      00029         ;bsf    STATUS, RP0
+                      00030         ;bcf    STATUS, RP1
+                      00031         ;movlw  0Ch
+                      00032         ;movwf  TRISC
+0001   1683           00033         bsf     STATUS, RP0     
+0002   1303           00034         bcf     STATUS, RP1     ; Select Bank 1
+0003   1687           00035         bsf     TRISC, TRISC5   ; RC5 input switch
+0004   1405           00036         bsf     TRISA, TRISA0   ; Set RA0 as input
+0005   1685           00037         bsf     TRISA, TRISA5   ; Set RA5 as output
+0006   1386           00038         bcf     TRISB, TRISB7   ; Set RB7 as output
+0007   1387           00039         bcf     TRISC, TRISC7   ; LED indicator
+0008   3070           00040         movlw   b'01110000'     ; Select ADC FRC clock
+0009   009F           00041         movwf   ADCON1
+MPASM 5.68                        SOURCE.ASM   9-13-2016  13:18:28         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0012   0099           00038         movwf   SPBRG           ; Use BAUD Rate = 1.2kbps in high speed
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0013   1518           00039         bsf     TXSTA, BRGH     ; Select high speed
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0014   1218           00040         bcf     TXSTA, SYNC     ; Enable asynchronous serial port
-0015   1283           00041         bcf     STATUS, RP0     
-0016   1303           00042         bcf     STATUS, RP1     ; Select Bank 0
-0017   1798           00043         bsf     RCSTA, SPEN     ; Enable asynchronous serial port
-0018   3081           00044         movlw   b'10000001'     ; Enable ADC and Rigth justify
-0019   009F           00045         movwf   ADCON0
-001A   2???           00046         goto    CalculateFrequency
-                      00047 ;*******************************************************************************
-                      00048 
-                      00049 ;**********CALCULATE FREQUENCY**************************************************
-001B                  00050 CalculateFrequency
-001B   2???           00051         call    One_S_Delay
-001C                  00052 StartTimer1
-001C   1303           00053         bcf     STATUS,RP1      ; Select Bank 0
-001D   1410           00054         bsf     T1CON, TMR1ON   ; Enable Timer 1
-001E   018E           00055         clrf    TMR1L
-001F   018F           00056         clrf    TMR1H
-0020   2???           00057         call    One_S_Delay
-0021                  00058 StopTimer1
-0021   1010           00059         bcf     T1CON, TMR1ON   ; Disable Timer 1
-0022   080E           00060         movf    TMR1L, W
-0023   00A0           00061         movwf   FREQUENCY_L     ; Store low byte if frequency
-0024   080F           00062         movf    TMR1H, W
-0025   00A1           00063         movwf   FREQUENCY_H     ; Store high byte of frequency
-0026   2???           00064         goto    CalculateVoltage
-                      00065 ;*******************************************************************************
-                      00066 
-                      00067 ;**********CALCULATE VOLTAGE****************************************************
-0027                  00068 CalculateVoltage
-0027   130C           00069         bcf     PIR1,6      ; A/D conversion has not started
-0028   1303           00070         bcf     STATUS,6
-0029   1683           00071         bsf     STATUS,5    ; Select bank 1
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-002A   170C           00072         bsf     PIE1,6      ; Enable ADC interrupt
-002B   1283           00073         bcf     STATUS,5    ; Select bank 0
-002C   170B           00074         bsf     INTCON,6
-002D   2???           00075         call    SampleTime
-002E   149F           00076         bsf     ADCON0,GO   ; Start A/D conversion cycle
-002F   189F           00077         btfsc   ADCON0,GO   ; Poll conversion
-0030   2???           00078         goto    $-1
-0031   081E           00079         movf    ADRESH,W
-0032   00A7           00080         movwf   DIGITHI
-0033   1303           00081         bcf     STATUS,6
-0034   1683           00082         bsf     STATUS,5    ; Select bank 1
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0035   081E           00083         movf    ADRESL,0
-0036   1283           00084         bcf     STATUS,5    ; Select bank 0
-0037   00A6           00085         movwf   DIGITLO
-0038   130C           00086         bcf     PIR1,6
-MPASM 5.68                        SOURCE.ASM   9-12-2016  9:21:22         PAGE  3
-
-
-LOC  OBJECT CODE     LINE SOURCE TEXT
-  VALUE
-
-0039   2???           00087         goto    PCComms
+000A   1283           00042         bcf     STATUS,RP0
+000B   1703           00043         bsf     STATUS,RP1      ; Select Bank 2
+000C   141E           00044         bsf     ANSEL,0         ; Enable analog input in RA0
+000D   1283           00045         bcf     STATUS, RP0     
+000E   1303           00046         bcf     STATUS, RP1     ; Select Bank 0
+000F   1490           00047         bsf     T1CON, TMR1CS   ; Use external clock source - T1CKI pin on rising edge
+0010   1510           00048         bsf     T1CON, 02       ; Do not synchronise the external clk input
+0011   1683           00049         bsf     STATUS, RP0     
+0012   1303           00050         bcf     STATUS, RP1     ; Select Bank 1
+0013   30CF           00051         movlw   0CFh
+0014   0099           00052         movwf   SPBRG           ; Use BAUD Rate = 1.2kbps in high speed
+0015   1518           00053         bsf     TXSTA, BRGH     ; Select high speed
+0016   1218           00054         bcf     TXSTA, SYNC     ; Enable asynchronous serial port
+0017   1283           00055         bcf     STATUS, RP0     
+0018   1303           00056         bcf     STATUS, RP1     ; Select Bank 0
+0019   1798           00057         bsf     RCSTA, SPEN     ; Enable asynchronous serial port
+001A   3081           00058         movlw   b'10000001'     ; Enable ADC and Rigth justify
+001B   009F           00059         movwf   ADCON0
+001C   2???           00060         goto    MainLoop
+                      00061 ;*******************************************************************************
+                      00062 
+                      00063 ;**********LOOP*****************************************************************
+001D                  00064 MainLoop
+001D   1387           00065         bcf     PORTC, RC7
+001E   1E87           00066         btfss   PORTC, RC5
+001F   2???           00067         goto    CalculateFrequency
+0020   2???           00068         goto    MainLoop
+                      00069 ;*******************************************************************************
+                      00070 
+                      00071 ;**********CALCULATE FREQUENCY**************************************************
+0021                  00072 CalculateFrequency
+0021   1787           00073         bsf     PORTC, RC7
+0022   2???           00074         call    One_S_Delay
+0023                  00075 StartTimer1
+0023   1303           00076         bcf     STATUS,RP1      ; Select Bank 0
+0024   1410           00077         bsf     T1CON, TMR1ON   ; Enable Timer 1
+0025   018E           00078         clrf    TMR1L
+0026   018F           00079         clrf    TMR1H
+0027   2???           00080         call    One_S_Delay
+0028                  00081 StopTimer1
+0028   1010           00082         bcf     T1CON, TMR1ON   ; Disable Timer 1
+0029   080E           00083         movf    TMR1L, W
+002A   00A0           00084         movwf   FREQUENCY_L     ; Store low byte if frequency
+002B   080F           00085         movf    TMR1H, W
+002C   00A1           00086         movwf   FREQUENCY_H     ; Store high byte of frequency
+002D   2???           00087         goto    CalculateVoltage
                       00088 ;*******************************************************************************
                       00089 
-                      00090 ;**********SEND INFO TO PC******************************************************
-003A   1683           00091 PCComms bsf     STATUS, RP0     
-003B   1303           00092         bcf     STATUS, RP1     ; Select Bank 1
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-003C   1698           00093         bsf     TXSTA, TXEN     ; Enable the transmission
-003D   1283           00094         bcf     STATUS, RP0     
-003E   1303           00095         bcf     STATUS, RP1     ; Select Bank 0
-003F   0820           00096         movf    FREQUENCY_L, 0
-0040   0099           00097         movwf   TXREG
-0041                  00098 PollPIR1_1
-0041   1E0C           00099         btfss   PIR1, TXIF      ; Wait for transmit buffer to be empty
-0042   2???           00100         goto    PollPIR1_1
-0043   0821           00101         movf    FREQUENCY_H, 0
-0044   0099           00102         movwf   TXREG
-0045                  00103 PollPIR1_2
-0045   1E0C           00104         btfss   PIR1, TXIF      ; Wait for transmit buffer to be empty
-0046   2???           00105         goto    PollPIR1_2
-0047   0826           00106         movf    DIGITLO, 0
-0048   0099           00107         movwf   TXREG
-0049                  00108 PollPIR1_3
-0049   1E0C           00109         btfss   PIR1, TXIF      ; Wait for transmit buffer to be empty
-004A   2???           00110         goto    PollPIR1_3
-004B   0827           00111         movf    DIGITHI, 0
-004C   0099           00112         movwf   TXREG
-004D                  00113 PollPIR1_4
-004D   1E0C           00114         btfss   PIR1, TXIF      ; Wait for transmit buffer to be empty
-004E   2???           00115         goto    PollPIR1_4
-004F   1683           00116         bsf     STATUS, RP0     
-0050   1303           00117         bcf     STATUS, RP1     ; Select Bank 1
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0051   1298           00118         bcf     TXSTA, TXEN     ; Disable the transmission
-0052   2???           00119         goto    CalculateFrequency
-                      00120 ;*******************************************************************************
-                      00121 
-                      00122 ;**********A/D CONVERSION*******************************************************
-                      00123 ;Sample 
-                      00124 ;       return
-                      00125 ;*******************************************************************************
-                      00126 
-                      00127 ;**********A/D SAMPLING TIME****************************************************
-0053                  00128 SampleTime
-0053   0000           00129         nop
-0054   0000           00130         nop
-0055   0000           00131         nop
-0056   0000           00132         nop
-0057   0000           00133         nop
-0058   0000           00134         nop
-0059   0008           00135         return
-                      00136 ;*******************************************************************************
-                      00137         
-MPASM 5.68                        SOURCE.ASM   9-12-2016  9:21:22         PAGE  4
+                      00090 ;**********CALCULATE VOLTAGE****************************************************
+002E                  00091 CalculateVoltage
+002E   130C           00092         bcf     PIR1,6      ; A/D conversion has not started
+002F   1303           00093         bcf     STATUS,6
+0030   1683           00094         bsf     STATUS,5    ; Select bank 1
+MPASM 5.68                        SOURCE.ASM   9-13-2016  13:18:28         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00138 ;**********1S DELAY*************************************************************
-005A                  00139 One_S_Delay
-                      00140         ; (((2+3(255))x10e-6)x216)x6 = 1.0000535s
-005A   3000           00141         movlw   00h         ; Load 256
-005B   00A3           00142         movwf   CNT_1
-005C   30D8           00143         movlw   0D8h        ; Load 216
-005D   00A4           00144         movwf   CNT_2
-005E   3006           00145         movlw   06h         ; Load 6
-005F   00A5           00146         movwf   CNT_3
-0060                  00147 Start_Delay
+0031   170C           00095         bsf     PIE1,6      ; Enable ADC interrupt
+0032   1283           00096         bcf     STATUS,5    ; Select bank 0
+0033   170B           00097         bsf     INTCON,6
+0034   2???           00098         call    SampleTime
+0035   149F           00099         bsf     ADCON0,GO   ; Start A/D conversion cycle
+0036   189F           00100         btfsc   ADCON0,GO   ; Poll conversion
+0037   2???           00101         goto    $-1
+0038   081E           00102         movf    ADRESH,W
+0039   00A7           00103         movwf   DIGITHI
+003A   1303           00104         bcf     STATUS,6
+003B   1683           00105         bsf     STATUS,5    ; Select bank 1
+003C   081E           00106         movf    ADRESL,0
+003D   1283           00107         bcf     STATUS,5    ; Select bank 0
+003E   00A6           00108         movwf   DIGITLO
+003F   130C           00109         bcf     PIR1,6
+0040   2???           00110         goto    PCComms
+                      00111 ;*******************************************************************************
+                      00112 
+                      00113 ;**********SEND INFO TO PC******************************************************
+0041   1683           00114 PCComms bsf     STATUS, RP0     
+0042   1303           00115         bcf     STATUS, RP1     ; Select Bank 1
+0043   1698           00116         bsf     TXSTA, TXEN     ; Enable the transmission
+0044   1283           00117         bcf     STATUS, RP0     
+0045   1303           00118         bcf     STATUS, RP1     ; Select Bank 0
+0046   0820           00119         movf    FREQUENCY_L, 0
+0047   0099           00120         movwf   TXREG
+0048                  00121 PollPIR1_1
+0048   1E0C           00122         btfss   PIR1, TXIF      ; Wait for transmit buffer to be empty
+0049   2???           00123         goto    PollPIR1_1
+004A   0821           00124         movf    FREQUENCY_H, 0
+004B   0099           00125         movwf   TXREG
+004C                  00126 PollPIR1_2
+004C   1E0C           00127         btfss   PIR1, TXIF      ; Wait for transmit buffer to be empty
+004D   2???           00128         goto    PollPIR1_2
+004E   0826           00129         movf    DIGITLO, 0
+004F   0099           00130         movwf   TXREG
+0050                  00131 PollPIR1_3
+0050   1E0C           00132         btfss   PIR1, TXIF      ; Wait for transmit buffer to be empty
+0051   2???           00133         goto    PollPIR1_3
+0052   0827           00134         movf    DIGITHI, 0
+0053   0099           00135         movwf   TXREG
+0054                  00136 PollPIR1_4
+0054   1E0C           00137         btfss   PIR1, TXIF      ; Wait for transmit buffer to be empty
+0055   2???           00138         goto    PollPIR1_4
+0056   1683           00139         bsf     STATUS, RP0     
+0057   1303           00140         bcf     STATUS, RP1     ; Select Bank 1
+0058   1298           00141         bcf     TXSTA, TXEN     ; Disable the transmission
+0059   1283           00142         bcf     STATUS, RP0     
+005A   1303           00143         bcf     STATUS, RP1     ; Select Bank 0
+005B   1387           00144         bcf     PORTC, RC7
+005C   2???           00145         goto    MainLoop
+                      00146 ;*******************************************************************************
+                      00147 
+MPASM 5.68                        SOURCE.ASM   9-13-2016  13:18:28         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00148 ;**********A/D CONVERSION*******************************************************
+                      00149 ;Sample 
+                      00150 ;       return
+                      00151 ;*******************************************************************************
+                      00152 
+                      00153 ;**********A/D SAMPLING TIME****************************************************
+005D                  00154 SampleTime
+005D   0000           00155         nop
+005E   0000           00156         nop
+005F   0000           00157         nop
+0060   0000           00158         nop
+0061   0000           00159         nop
+0062   0000           00160         nop
+0063   0008           00161         return
+                      00162 ;*******************************************************************************
+                      00163         
+                      00164 ;**********1S DELAY*************************************************************
+0064                  00165 One_S_Delay
+                      00166         ; (((2+3(255))x10e-6)x216)x6 = 1.0000535s
+0064   3000           00167         movlw   00h         ; Load 256
+0065   00A3           00168         movwf   CNT_1
+0066   30D8           00169         movlw   0D8h        ; Load 216
+0067   00A4           00170         movwf   CNT_2
+0068   3006           00171         movlw   06h         ; Load 6
+0069   00A5           00172         movwf   CNT_3
+006A                  00173 Start_Delay
 Message[305]: Using default destination of 1 (file).
-0060   0BA3           00148         decfsz  CNT_1
-0061   2???           00149         goto    Start_Delay
-0062   3000           00150         movlw   00h
-0063   00A3           00151         movwf   CNT_1
+006A   0BA3           00174         decfsz  CNT_1
+006B   2???           00175         goto    Start_Delay
+006C   3000           00176         movlw   00h
+006D   00A3           00177         movwf   CNT_1
 Message[305]: Using default destination of 1 (file).
-0064   0BA4           00152         decfsz  CNT_2
-0065   2???           00153         goto    Start_Delay
-0066   30D8           00154         movlw   0D8h
-0067   00A4           00155         movwf   CNT_2
+006E   0BA4           00178         decfsz  CNT_2
+006F   2???           00179         goto    Start_Delay
+0070   30D8           00180         movlw   0D8h
+0071   00A4           00181         movwf   CNT_2
 Message[305]: Using default destination of 1 (file).
-0068   0BA5           00156         decfsz  CNT_3
-0069   2???           00157         goto    Start_Delay
-006A   0008           00158         return
-                      00159 ;*******************************************************************************
-                      00160         
-                      00161         end
-MPASM 5.68                        SOURCE.ASM   9-12-2016  9:21:22         PAGE  5
+0072   0BA5           00182         decfsz  CNT_3
+0073   2???           00183         goto    Start_Delay
+0074   0008           00184         return
+                      00185 ;*******************************************************************************
+                      00186         
+33C4                  00187         end
+MPASM 5.68                        SOURCE.ASM   9-13-2016  13:18:28         PAGE  5
 
 
 SYMBOL TABLE
@@ -267,7 +283,7 @@ C1CH0                             00000000
 C1CH1                             00000001
 C1IE                              00000005
 C1IF                              00000005
-MPASM 5.68                        SOURCE.ASM   9-12-2016  9:21:22         PAGE  6
+MPASM 5.68                        SOURCE.ASM   9-13-2016  13:18:28         PAGE  6
 
 
 SYMBOL TABLE
@@ -316,8 +332,8 @@ CNT_2                             00000024
 CNT_3                             00000025
 CREN                              00000004
 CSRC                              00000007
-CalculateFrequency                0000001B
-CalculateVoltage                  00000027
+CalculateFrequency                00000021
+CalculateVoltage                  0000002E
 D                                 00000005
 DATA_ADDRESS                      00000005
 DC                                00000001
@@ -326,7 +342,7 @@ DC1B1                             00000005
 DIGITHI                           00000027
 DIGITLO                           00000026
 D_A                               00000005
-MPASM 5.68                        SOURCE.ASM   9-12-2016  9:21:22         PAGE  7
+MPASM 5.68                        SOURCE.ASM   9-13-2016  13:18:28         PAGE  7
 
 
 SYMBOL TABLE
@@ -385,7 +401,7 @@ IOCB                              00000116
 IOCB4                             00000004
 IOCB5                             00000005
 IOCB6                             00000006
-MPASM 5.68                        SOURCE.ASM   9-12-2016  9:21:22         PAGE  8
+MPASM 5.68                        SOURCE.ASM   9-13-2016  13:18:28         PAGE  8
 
 
 SYMBOL TABLE
@@ -408,6 +424,7 @@ MSK4                              00000004
 MSK5                              00000005
 MSK6                              00000006
 MSK7                              00000007
+MainLoop                          0000001D
 NOT_A                             00000005
 NOT_ADDRESS                       00000005
 NOT_BOR                           00000000
@@ -426,11 +443,11 @@ OSCTUNE                           00000090
 OSFIE                             00000007
 OSFIF                             00000007
 OSTS                              00000003
-One_S_Delay                       0000005A
+One_S_Delay                       00000064
 P                                 00000004
 P1M0                              00000006
 P1M1                              00000007
-PCComms                           0000003A
+PCComms                           00000041
 PCL                               00000002
 PCLATH                            0000000A
 PCON                              0000008E
@@ -443,13 +460,13 @@ PDC5                              00000005
 PDC6                              00000006
 PEIE                              00000006
 PIE1                              0000008C
-PIE2                              0000008D
-MPASM 5.68                        SOURCE.ASM   9-12-2016  9:21:22         PAGE  9
+MPASM 5.68                        SOURCE.ASM   9-13-2016  13:18:28         PAGE  9
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+PIE2                              0000008D
 PIR1                              0000000C
 PIR2                              0000000D
 PORTA                             00000005
@@ -469,10 +486,10 @@ PSTRCON                           0000019D
 PULSR                             00000002
 PULSS                             00000003
 PWM1CON                           0000001C
-PollPIR1_1                        00000041
-PollPIR1_2                        00000045
-PollPIR1_3                        00000049
-PollPIR1_4                        0000004D
+PollPIR1_1                        00000048
+PollPIR1_2                        0000004C
+PollPIR1_3                        00000050
+PollPIR1_4                        00000054
 R                                 00000002
 RA0                               00000000
 RA1                               00000001
@@ -502,13 +519,13 @@ RCSTA                             00000018
 RD                                00000000
 READ_WRITE                        00000002
 RP0                               00000005
-RP1                               00000006
-MPASM 5.68                        SOURCE.ASM   9-12-2016  9:21:22         PAGE 10
+MPASM 5.68                        SOURCE.ASM   9-13-2016  13:18:28         PAGE 10
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+RP1                               00000006
 RX9                               00000006
 RX9D                              00000000
 R_NOT_W                           00000002
@@ -548,11 +565,11 @@ STRD                              00000003
 STRSYNC                           00000004
 SWDTEN                            00000000
 SYNC                              00000004
-SampleTime                        00000053
+SampleTime                        0000005D
 Setup                             00000001
-StartTimer1                       0000001C
-Start_Delay                       00000060
-StopTimer1                        00000021
+StartTimer1                       00000023
+Start_Delay                       0000006A
+StopTimer1                        00000028
 T0CS                              00000005
 T0IE                              00000005
 T0IF                              00000002
@@ -561,13 +578,13 @@ T1CKPS0                           00000004
 T1CKPS1                           00000005
 T1CON                             00000010
 T1GINV                            00000007
-T1GSS                             00000001
-MPASM 5.68                        SOURCE.ASM   9-12-2016  9:21:22         PAGE 11
+MPASM 5.68                        SOURCE.ASM   9-13-2016  13:18:28         PAGE 11
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+T1GSS                             00000001
 T1IE                              00000000
 T1IF                              00000000
 T1OSCEN                           00000003
@@ -620,13 +637,13 @@ TUN0                              00000000
 TUN1                              00000001
 TUN2                              00000002
 TUN3                              00000003
-TUN4                              00000004
-MPASM 5.68                        SOURCE.ASM   9-12-2016  9:21:22         PAGE 12
+MPASM 5.68                        SOURCE.ASM   9-13-2016  13:18:28         PAGE 12
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TUN4                              00000004
 TX9                               00000006
 TX9D                              00000000
 TXEN                              00000005
@@ -673,19 +690,19 @@ WREN                              00000002
 WRERR                             00000003
 WUE                               00000001
 Z                                 00000002
-_.org_0_0030                      00000030
+_.org_0_0037                      00000037
 _BOD_NSLEEP                       00003EFF
 _BOD_OFF                          00003CFF
 _BOD_ON                           00003FFF
 _BOD_SBODEN                       00003DFF
 _BOREN_NSLEEP                     00003EFF
-_BOREN_OFF                        00003CFF
-MPASM 5.68                        SOURCE.ASM   9-12-2016  9:21:22         PAGE 13
+MPASM 5.68                        SOURCE.ASM   9-13-2016  13:18:28         PAGE 13
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_BOREN_OFF                        00003CFF
 _BOREN_ON                         00003FFF
 _BOREN_SBODEN                     00003DFF
 _BOR_NSLEEP                       00003EFF
@@ -736,14 +753,14 @@ _WDT_ON                           00003FFF
 _XT_OSC                           00003FF9
 __16F690                          00000001
 
-MPASM 5.68                        SOURCE.ASM   9-12-2016  9:21:22         PAGE 14
+MPASM 5.68                        SOURCE.ASM   9-13-2016  13:18:28         PAGE 14
 
 
 
 
 
 Errors   :     0
-Warnings :     0 reported,     0 suppressed
-Messages :    15 reported,     0 suppressed
+Warnings :     1 reported,     0 suppressed
+Messages :     3 reported,    14 suppressed
 
 

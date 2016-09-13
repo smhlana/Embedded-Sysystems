@@ -1,4 +1,7 @@
+    __CONFIG  _CP_OFF & _CPD_OFF & _PWRTE_ON & _WDT_OFF & _INTRC_OSC_NOCLKOUT & _MCLRE_OFF & _FCMEN_OFF & _IESO_OFF
+                LIST        P = 16F690, r=dec
 #include "P16F690.inc"
+errorlevel -302                                ; suppress the bank sel check warnings
 
 ;**********REGISTERS LABEL EQUATES**********************************************
 W		EQU 00h
@@ -18,11 +21,22 @@ DIGITHI		EQU 27h
 ;*******************************************************************************
 	
 ;**********SETUP****************************************************************
-Setup   bcf     STATUS, RP0	
-        bsf     STATUS, RP1	; Select Bank 1
+Setup   ;bcf	STATUS, RP0
+	;bcf	STATUS, RP1
+	;clrf	PORTC	
+	;bsf	STATUS, RP1
+	;CLRF	ANSEL	
+	;bsf	STATUS, RP0
+	;bcf	STATUS, RP1
+	;movlw	0Ch
+	;movwf	TRISC
+	bsf     STATUS, RP0	
+        bcf     STATUS, RP1	; Select Bank 1
+	bsf	TRISC, TRISC5	; RC5 input switch
 	bsf	TRISA, TRISA0	; Set RA0 as input
 	bsf	TRISA, TRISA5	; Set RA5 as output
 	bcf	TRISB, TRISB7	; Set RB7 as output
+	bcf	TRISC, TRISC7	; LED indicator
 	movlw	b'01110000'	; Select ADC FRC clock
         movwf	ADCON1
 	bcf	STATUS,RP0
@@ -43,11 +57,20 @@ Setup   bcf     STATUS, RP0
 	bsf	RCSTA, SPEN	; Enable asynchronous serial port
 	movlw   b'10000001'	; Enable ADC and Rigth justify
         movwf   ADCON0
+	goto	MainLoop
+;*******************************************************************************
+
+;**********LOOP*****************************************************************
+MainLoop
+	bcf	PORTC, RC7
+	btfss	PORTC, RC5
 	goto	CalculateFrequency
+	goto	MainLoop
 ;*******************************************************************************
 
 ;**********CALCULATE FREQUENCY**************************************************
 CalculateFrequency
+	bsf	PORTC, RC7
 	call	One_S_Delay
 StartTimer1
 	bcf     STATUS,RP1	; Select Bank 0
@@ -116,7 +139,10 @@ PollPIR1_4
 	bsf     STATUS, RP0	
         bcf     STATUS, RP1	; Select Bank 1
 	bcf	TXSTA, TXEN	; Disable the transmission
-	goto	CalculateFrequency
+	bcf     STATUS, RP0	
+        bcf     STATUS, RP1	; Select Bank 0
+	bcf	PORTC, RC7
+	goto	MainLoop
 ;*******************************************************************************
 
 ;**********A/D CONVERSION*******************************************************
