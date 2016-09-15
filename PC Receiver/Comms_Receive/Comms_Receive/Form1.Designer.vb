@@ -46,11 +46,11 @@ Partial Class Form1
         '
         'closeButton
         '
-        Me.closeButton.Location = New System.Drawing.Point(452, 84)
+        Me.closeButton.Location = New System.Drawing.Point(452, 237)
         Me.closeButton.Name = "closeButton"
         Me.closeButton.Size = New System.Drawing.Size(75, 23)
         Me.closeButton.TabIndex = 1
-        Me.closeButton.Text = "Close Port"
+        Me.closeButton.Text = "Close"
         Me.closeButton.UseVisualStyleBackColor = True
         '
         'writeButton
@@ -109,17 +109,21 @@ Partial Class Form1
         '
         Me.baudComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.baudComboBox.FormattingEnabled = True
+        Me.baudComboBox.Items.AddRange(New Object() {"9600", "115200"})
         Me.baudComboBox.Location = New System.Drawing.Point(349, 99)
         Me.baudComboBox.Name = "baudComboBox"
         Me.baudComboBox.Size = New System.Drawing.Size(97, 21)
         Me.baudComboBox.TabIndex = 8
+        '
+        'SerialPort1
+        '
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ActiveBorder
-        Me.ClientSize = New System.Drawing.Size(568, 306)
+        Me.ClientSize = New System.Drawing.Size(541, 291)
         Me.Controls.Add(Me.baudComboBox)
         Me.Controls.Add(Me.portComboBox)
         Me.Controls.Add(Me.Label2)
